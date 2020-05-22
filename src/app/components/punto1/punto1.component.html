@@ -1,0 +1,78 @@
+<div class="flex justify-content-center row">
+    <form action="" class="card mt-4 mb-4" style="width:600px">
+        <div class="card-header bg-primary">
+            Envio de Mensajes
+        </div>
+
+        <div class="card-body">
+            <div class="row form-group">
+                <label for="" class="col-sm-12 col-md-4">Para</label>
+                <input [(ngModel)]="mensaje.para" type="number" class="form-control col-sm-12 col-md-8" name="txtdesde">
+            </div>
+
+            <div class="row form-group">
+                <label for="" class="col-sm-12 col-md-4">Desde</label>
+                <input [(ngModel)]="mensaje.desde" type="number" class="form-control col-sm-12 col-md-8"
+                    name="txthasta">
+            </div>
+
+            <label for=""> Tu mensaje </label> ( {{tamMinTexto}} Caracteres restantes )
+            <div class="row form-group">
+                <textarea [(ngModel)]="mensaje.texto" class="form-control" [maxlength]="tamMaxTexto" rows="5"
+                    name="txtTexto" (ngModelChange)="cambiarTamTexto()"></textarea>
+            </div>
+
+            <div class="form-group text-center">
+                <button type="button" class="btn btn-primary ml-2 mr-2" data-toggle="modal"
+                    data-target="#mensajeModal">Enviar</button>
+                <button type="button" class="btn btn-primary ml-2 mr-2" (click)="limpiar()">Limpiar</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mensajeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <label for="">Para</label> {{mensaje.para}}
+                    <label for="">Desde</label> {{mensaje.desde}}
+                    <label for="">Mensaje</label> {{mensaje.texto}}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="enviarMensaje()">Guardar
+                    Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Para</th>
+            <th>Desde</th>
+            <th>Fecha</th>
+            <th>Mensaje</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of mensajes">
+            <td>{{item.para}}</td>
+            <td>{{item.desde}}</td>
+            <td>{{item.fecha}}</td>
+            <td>{{item.texto}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,160 @@
+punto 3 angular 
+
+<form #formregistro="ngForm">
+<div class="form-group">
+<label for="dnipasajero">DNI</label>
+<input type="text" class="form-control" id="dnipasajero" name="dnipasajero" placeholder="ingrese DNI" required minlength="7" [(ngModel)]="venta.dnipasajero" #dnipasajero="ngModel" />
+<div *ngIf="dnipasajero.invalid && (dnipasajero.dirty || dnipasajero.touched)" class="alert alert-danger">
+<div *ngIf="dnipasajero.errors.required">
+DNI es campo requerido
+</div>
+<div *ngIf="dnipasajero.errors.minlength">
+DNI debe ser un valor mayor de 8 caracteres
+</div>
+</div>
+</div>
+<div class="form-group">
+<label for="precio">Precio</label>
+<input type="number" class="form-control" id="precio" name="precio" placeholder="ingres valor del pasaje"
+[(ngModel)]="venta.precio" />
+</div>
+<div class="form-group">
+<label for="categoria">Categor&iacute;a</label>
+<select name="categoria" id="categoria" class="form-control" [(ngModel)]="venta.categoriapasajero" (change)='calcularDescuento()'>
+<option value="m">Menor</option>
+<option value="a">Adulto</option>
+<option value="j">Jubilado</option>
+<option value="s" selected>Seleccione ..</option>
+</select>
+</div>
+<div class="text-danger" *ngIf="show">Valor Total:{{precio_descuento}}</div>
+<button type="button" class="btn btn-primary" (click)="saveVenta()" [disabled]="!formregistro.form.valid">Enviar</button>
+<button type="button" class="btn btn-primary">Limpiar</button>
+</form>
+
+<table class="table">
+<thead>
+<tr>
+<th scope="col">#</th>
+<th scope="col">DNI</th>
+<th scope="col">Precio</th>
+<th scope="col">Categor&iacute;a</th>
+<th scope="col">Fecha</th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let item of vector_ventas">
+<td></td>
+<td>{{item.dnipasajero}}</td>
+<td>{{item.precio}}</td>
+<td>{{item.categoriapasajero}}</td>
+<td>{{item.fechacompra | date: 'dd/MM/yyyy'}}</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+<!--ts-->
+import { Component, OnInit } from '@angular/core';
+import { Pasaje } from 'src/app/models/pasaje';
+import { VentasService } from 'src/app/services/ventas.service';
+
+@Component({
+selector: 'app-tp2-p3',
+templateUrl: './tp2-p3.component.html',
+styleUrls: ['./tp2-p3.component.css']
+})
+export class Tp2P3Component implements OnInit {
+venta: Pasaje;
+vector_ventas: Array<Pasaje>;
+precio_descuento: number = 0;
+show:boolean=false;
+constructor(private ventasservice: VentasService) {
+this.venta = new Pasaje();
+this.vector_ventas = new Array<Pasaje>();
+this.listVenta();
+}
+
+ngOnInit(): void {
+}
+
+onSubmit(f) {
+console.log(f.value);
+}
+
+public calcularDescuento() {
+if (this.venta.categoriapasajero == 'm') {
+this.precio_descuento = (this.venta.precio * 25) / 100;
+this.show=true;
+}
+if (this.venta.categoriapasajero == 'j') {
+this.precio_descuento = (this.venta.precio * 50) / 100;
+this.show=true;
+}
+}
+public saveVenta() {
+this.venta.fechacompra = new Date();
+this.ventasservice.saveVenta(this.venta);
+this.venta = new Pasaje();
+this.precio_descuento = 0;
+this.show=false;
+}
+
+public listVenta() {
+this.vector_ventas = this.ventasservice.listVenta();
+}
+
+}
+
+export class Pasaje {
+    dnipasajero:string;
+    precio:number;
+    categoriapasajero:string;
+    fechacompra:Date;
+    
+    pasaje(dnipasajero?:string,precio?:number,categoriapasajero?:string,fechacompra?:Date){
+    this.dnipasajero=dnipasajero;
+    this.precio=precio;
+    this.categoriapasajero=categoriapasajero;
+    this.fechacompra=fechacompra;
+    }
+    }
+    
+    An
+    Angel Casasola
+    20:28
+    import { Injectable } from '@angular/core';
+    import { Pasaje } from '../models/pasaje';
+    
+    @Injectable({
+    providedIn: 'root'
+    })
+    export class VentasService {
+    vector_ventas:Array<Pasaje>;
+    constructor() {
+    this.vector_ventas= new Array<Pasaje>();
+    }
+    
+    listVenta(){
+    return this.vector_ventas;
+    }
+    
+    saveVenta(venta:Pasaje)
+    {
+    this.vector_ventas.push(venta);
+    }
+    
+    updateVenta(venta: Pasaje)
+    {
+    
+    }
+    
+    deleteVenta(idventa:number)
+    {
+    
+    }
+    }

@@ -1,0 +1,106 @@
+<div class="row">
+    <form #ngFormregistro="ngForm" class="col-md-10 offset-1" method="post" action="">
+        <h2 class="text-center mt-3 mb-3"> VENTA DE PASAJES </h2>
+
+        <div class="form-group row">
+            <label for="iddni" class="col-md-4">Dni</label>
+            <input id="iddni" class="form-control form-control-sm col-md-8" type="number" name="dni"
+                [(ngModel)]="pasaje.dniPasajero" required #dni="ngModel">
+            <div *ngIf="dni.invalid && (dni.dirty || dni.touched)" style="color: red;">
+                <div *ngIf="dni.errors.required">
+                    DNI es un campo requerido
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="idpasaje" class="col-md-4">Precio Pasaje</label>
+            <input id="idpasaje" class="form-control form-control-sm col-md-8" type="number" name="precio" required
+                #precio="ngModel" [(ngModel)]="pasaje.precioPasaje">
+            <div *ngIf="precio.invalid && (precio.dirty || precio.touched)" style="color: red;">
+                <div *ngIf="precio.errors.required">
+                    Precio del pasaje es un campo requerido
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="exampleFormControlSelect1" class="col-md-4">Categoria Pasajero</label>
+            <select class="form-control form-control-sm col-md-8" id="exampleFormControlSelect1" required name="categoria"
+                [(ngModel)]="pasaje.categoriaPasajero" (ngModelChange)="cambio()" #categoria="ngModel">
+                <option>Menor</option>
+                <option>Adulto</option>
+                <option>Jubilado</option>
+            </select>
+            <div [hidden]="categoria.valid || categoria.pristine" style="color: red;">
+                Categoria es requerida
+            </div>
+
+        </div>
+
+        <div *ngIf="mostrar">
+            <label for="" *ngIf="mostrar">Precio Descuento : </label> {{precioDescuento}}
+            <label for="">Precio Total : </label> {{precioTotal}}
+        </div>
+
+
+        <div class="form-group text-center">
+            <button class="btn btn-primary ml-2 mr-2" (click)="guardarPasaje()"
+                [disabled]="!ngFormregistro.form.valid"><i class="fa fa-save"></i>
+                Guardar</button>
+            <button class="btn btn-primary ml-2 mr-2" (click)="modificarPasaje()"><i class="fa fa-save"></i>
+                Modificar</button>
+            <button class="btn btn-primary ml-2 mr-2" (click)="limpiar()"><i class="fa fa-trash"></i> Limpiar</button>
+        </div>
+    </form>
+</div>
+<table class="table table-striped" [mfData]="pasajes" #mf="mfDataTable" [mfRowsOnPage]="5">
+    <thead>
+        <tr>
+            <th style="width: 20%">
+                <mfDefaultSorter by="">DNI</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+                <mfDefaultSorter by="">PRECIO PASAJE</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+                <mfDefaultSorter by="">PASAJERO</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+                <mfDefaultSorter by="">FECHA COMPRA</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+                <mfDefaultSorter by="">Acciones</mfDefaultSorter>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of mf.data">
+            <td>{{item.dniPasajero}}</td>
+            <td>{{item.precioPasaje}}</td>
+            <td>{{item.categoriaPasajero | uppercase}}</td>
+            <td>{{item.fechaCompra | date: "dd/MM/yyyy"}}</td>
+            <td>
+                <button class="btn btn-primary" (click)="elegirPasaje(item)">Seleccionar</button>
+                <button class="btn btn-primary" (click)="borrarPasaje(item.id)">Borrar</button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<div>
+    <h3 class="text-center mb-2">RESUMEN COMPRAS PASAJES</h3>
+    <button class="btn btn-primary mb-2" (click)="mostrarResumen()">Mostrar Resumen</button>
+    <div class="d-inline-flex ml-4">
+        <p>Total Menor: </p> {{totalM}}
+        <p class="ml-4">Total Adulto: </p> {{totalA}}
+        <p class="ml-4">Total Jubilado: </p> {{totalJ}}
+        <p class="ml-4">Total General: </p> {{total}}
+    </div>
+</div>

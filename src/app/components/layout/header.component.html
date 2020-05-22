@@ -1,0 +1,43 @@
+<header class="row header">
+    <div class="col-md-4">
+        <a [routerLink]="['home']" href=""><img src="assets/img/logo.png" alt="logo"></a>
+    </div>
+    <div class="col-md-8 titulo-principal">
+        <h1>camara jujeña de empresas de salud</h1>
+    </div>
+</header>
+<nav class="navbar navbar-expand-lg navegacion">
+    <a class="navbar-brand" [routerLink]="['home']">CJES</a>
+    <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarNavDropdown">
+        <ul class="navbar-nav lista">
+            <li routerLink="active">
+                <a [routerLink]="['home']" class="nav-link"><i class="fas fa-home"></i>Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]="['registro']" class="nav-link" href="#"><i class="fas fa-user"></i>Registro</a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]="['slider']" class="nav-link" href="#"><i class="far fa-images"></i>Slider</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Puntos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a [routerLink]="['punto1']" class="dropdown-item" href="#">Punto 1</a>
+                  <a [routerLink]="['punto2']" class="dropdown-item" href="#">Punto 2</a>
+                  <a [routerLink]="['punto3']" class="dropdown-item" href="#">Punto 3</a>
+                  <a [routerLink]="['punto4']" class="dropdown-item" href="#">Punto 4</a>
+                  <div class="dropdown-divider"></div>
+                  <a [routerLink]="['datatable']" class="dropdown-item" href="#">Datatable</a>
+                  <a [routerLink]="['puntointeres']" class="dropdown-item" href="#">Puntos de interes</a>
+                  <a [routerLink]="['nba']" class="dropdown-item" href="#">Web Services</a>
+                </div>
+              </li>
+        </ul>
+    </div>
+</nav>

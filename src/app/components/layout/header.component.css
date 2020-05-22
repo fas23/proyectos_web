@@ -1,0 +1,27 @@
+.header a img{
+    width: 200px;
+}
+ .titulo-principal{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+ }
+ .titulo-principal h1 {
+     text-transform: uppercase;
+     color: rgb(142, 49, 128);
+     font-size: 2.5rem;
+ }
+ 
+ .navegacion{
+    background: #152F4F;
+ }
+ .navegacion ul li a{
+     font-size: 1.4rem;
+ }
+
+ .lista{
+    display: flex;
+    justify-content: space-around;
+    flex-grow: 1;
+ }
+ 

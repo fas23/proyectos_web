@@ -1,0 +1,27 @@
+<div class="">
+  <div class="texto-juego  mr-3 mb-3">
+    <h2 class="text-center">Juego de Palabras</h2>
+  </div>
+
+  <div class="flex justify-content-center row">
+    <div class="card col-md-4" style="width:400px">
+      <img class="card-img-top" [src]="imagen" alt="Card image">
+      <div class="card-body">
+        <h4 class="card-title">{{palEspanol}}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-content-center row">
+    <div class="form-group row">
+      <label class="col-md-4 mt-2" for="">Ingrese la palabra</label>
+      <input class="form-control form-control-sm col-md-8 mt-3" type="text" name="palabra" id="palabra"
+        [(ngModel)]="palabraUsuario">
+    </div>
+  </div>
+  <div class="row flex justify-content-center">
+    <button class="btn btn-primary mr-4" (click)="iniciarJuego()" >Iniciar </button>
+    <button class="btn btn-primary" (click)="verificarPalabra()" [disabled]="boton">Comprobar</button>
+  </div>
+  
+</div>

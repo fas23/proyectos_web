@@ -1,0 +1,79 @@
+<div class="row">
+    <form class="col-md-10 offset-1" method="post" action="">
+        <h2 class="text-center"> GESTION DE PUNTOS DE INTERES </h2>
+        <div class="form-group row">
+            <label for="idnombre" class="col-md-4">Nombre</label>
+            <input id="idnombre" class="form-control form-control-sm col-md-8" 
+                type="text" name="idnombre" [(ngModel)]="puntoInteres.nombre"/>
+        </div>
+        <div class="form-group row">
+            <label for="iddescripcion" class="col-md-4">Descripcion</label>
+            <input id="iddescripcion" class="form-control form-control-sm col-md-8"
+                 type="text" name="iddescripcion" [(ngModel)]="puntoInteres.descripcion"/>
+        </div>
+        <div class="form-group row">
+            <label for="idlatitud" class="col-md-4">Latitud</label>
+            <input id="idlatitud" class="form-control form-control-sm col-md-8"
+                 type="number" name="idlatitud" [(ngModel)]="puntoInteres.latitud" 
+                 (ngModelChange) = "actualizarUrlTest()"/>
+        </div>
+        <div class="form-group row">
+            <label for="idlongitud" class="col-md-4">Longitud</label>
+            <input id="idlongitud" class="form-control form-control-sm col-md-8"
+                 type="number" name="idlongitud" [(ngModel)]="puntoInteres.longitud"
+                 (ngModelChange) = "actualizarUrlTest()"/>
+        </div>
+        <div class="form-group row">
+            <label class="col-12">Test Url:<a [href]="urlTest">{{urlTest}}</a>  </label> 
+            <label for="idurlmapa" class="col-md-4">Url Mapa</label>
+            <input id="idurlmapa" class="form-control form-control-sm col-md-8"
+                 type="url" name="idurlmapa" [(ngModel)]="puntoInteres.urlMapa"/>
+        </div>
+        <div class="form-group text-center">
+            <button class="btn btn-secondary ml-2 mr-2" (click)="guardarPunto()"><i class="fa fa-save"></i> Guardar</button>
+            <button class="btn btn-secondary ml-2 mr-2" (click)="modificarPunto()"><i class="fa fa-save"></i> Modificar</button>
+            <button class="btn btn-secondary ml-2 mr-2" (click)="limpiarPunto()"><i class="fa fa-trash"></i> Limpiar</button>
+        </div>
+    </form>
+
+    <table class="table table-striped" [mfData]="puntosInteres" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead>
+            <tr>
+                <th style="width: 20%">
+                    <mfDefaultSorter by="">Name</mfDefaultSorter>
+                </th>
+                <th style="width: 20%">
+                    <mfDefaultSorter by="">Longitud</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                    <mfDefaultSorter by="">Latitud</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                    <mfDefaultSorter by="">Url Mapa</mfDefaultSorter>
+                </th>
+                <th style="width: 20%">
+                    <mfDefaultSorter by="">Acciones</mfDefaultSorter>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of mf.data">
+                <td>{{item.nombre}}</td>
+                <td>{{item.latitud}}</td>
+                <td class="text-right">{{item.longitud}}</td>
+                <td><a [href]="item.urlMapa" class="btn btn-primary">Ir</a></td>
+                <td>
+                    <button class="btn btn-primary" (click)="elegirPunto(item)" >Seleccionar</button>
+                    <button class="btn btn-primary" (click)="borrarPunto(item.id)" >Borrar</button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
